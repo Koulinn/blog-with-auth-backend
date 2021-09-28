@@ -16,7 +16,7 @@ const getAll = async (req, res, next) => {
       res.body = blogs
       next()
     } else {
-      console.log('elseeeee')
+      console.log('elseeeee get all blogpost')
       const blogs = await BlogPost.find({})
       res.body = blogs
       next()
