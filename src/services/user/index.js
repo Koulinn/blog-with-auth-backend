@@ -7,6 +7,13 @@ const router = express.Router()
 router
   .route("/")
   .get(users.getAll)
+ 
+router
+  .route("/new/register")
+  .post(users.create)
+  
+router
+  .route("/new/register")
   .post(users.create)
 
 
