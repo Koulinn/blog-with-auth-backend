@@ -21,9 +21,9 @@ router
   .route("/new/register")
   .post(users.create)
 
-router
-  .route("/new/register")
-  .post(users.create)
+// router
+//   .route("/new/register")
+//   .post(users.create)
 
 
 router
@@ -31,7 +31,7 @@ router
   .get(JWTAuthMiddleware, users.getAllPosts)
   
 router
-  .route("/:userID")
+  .route("/me")
   .get(JWTAuthMiddleware, users.getSingle)
   .put(JWTAuthMiddleware, users.update)
   .delete(JWTAuthMiddleware, users.deleteSingle)
