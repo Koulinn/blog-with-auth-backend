@@ -8,10 +8,15 @@ const router = express.Router()
 router
   .route("/")
   .get(users.getAll)
+
 router
   .route("/login/check")
   .post(users.checkLogin)
- 
+  
+  router
+    .route("/refresh/token")
+    .post(users.refreshToken)
+
 router
   .route("/new/register")
   .post(users.create)

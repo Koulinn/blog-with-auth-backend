@@ -1,7 +1,7 @@
 import User from "../../db/models/User.js"
 import aqp from 'api-query-params';
 import BlogPost from "../../db/models/BlogPost.js"
-import { JWTAuthenticate } from "../../auth/jwt-aux.js";
+import { JWTAuthenticate, refreshTokens } from "../../auth/jwt-aux.js";
 import createHttpError from "http-errors"
 
 
@@ -124,6 +124,18 @@ const checkLogin = async (req, res, next) => {
   }
 }
 
+const refreshToken = async (req, res, next) => {
+  try {
+    const { actualRefreshToken } = req.body
+    const { accessToken, refreshToken } = await refreshTokens(actualRefreshToken)
+
+    res.send({ accessToken, refreshToken })
+  } catch (error) {
+    next(error)
+  }
+}
+
+
 const users = {
   create: create,
   getAll: getAll,
@@ -131,7 +143,9 @@ const users = {
   update: update,
   deleteSingle: deleteSingle,
   getAllPosts: getAllPosts,
-  checkLogin: checkLogin
+  checkLogin: checkLogin,
+  refreshToken: refreshToken
+
 }
 
 export default users
