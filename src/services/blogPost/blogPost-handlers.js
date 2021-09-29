@@ -44,6 +44,7 @@ const getSingle = async (req, res, next) => {
 
 const create = async (req, res, next) => {
   try {
+    req.body.author = req.user._id
     const newBlogPost = new BlogPost(req.body)
     const DbRes = await newBlogPost.save({new: true})
 
