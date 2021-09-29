@@ -1,17 +1,22 @@
 import express from "express"
 import users from './user-handlers.js'
 import { basicAuthMiddleware } from "../../auth/auth.js"
+import { JWTAuthenticate } from "../../auth/jwt-aux.js"
+import { JWTAuthMiddleware } from "../../auth/jwt-middle.js"
 
 const router = express.Router()
 
 router
   .route("/")
   .get(users.getAll)
+router
+  .route("/login/check")
+  .post(users.checkLogin)
  
 router
   .route("/new/register")
   .post(users.create)
-  
+
 router
   .route("/new/register")
   .post(users.create)

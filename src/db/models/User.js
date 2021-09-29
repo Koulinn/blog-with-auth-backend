@@ -10,7 +10,7 @@ const userSchema = new Schema(
         email: { type: String, unique: true, required: true },
         password: { type: String, required: true },
         role: { type: String, enum:['Admin', 'User'] , default: 'User' },
-        Token: { type: String },
+        refreshToken: { type: String },
         dateOfBirth: { type: Date, required: true },
         avatar: {
           type: String,

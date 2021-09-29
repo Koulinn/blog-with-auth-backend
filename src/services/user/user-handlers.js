@@ -1,6 +1,7 @@
 import User from "../../db/models/User.js"
 import aqp from 'api-query-params';
 import BlogPost from "../../db/models/BlogPost.js"
+import { JWTAuthenticate } from "../../auth/jwt-aux.js";
 
 
 const getAll = async (req, res, next) => {
@@ -102,13 +103,36 @@ const getAllPosts = async (req, res, next) => {
   }
 }
 
+const checkLogin = async (req, res, next) => {
+  try {
+    const { email, password } = req.body
+
+    // 1. Verify credentials
+
+    const user = await User.checkCredentials(email, password)
+
+    if (user) {
+      // 2. If everything is ok we are going to generate an access token
+      const { accessToken, refreshToken } = await JWTAuthenticate(user)
+      // 3. Send token back as a response
+      res.send({ accessToken, refreshToken })
+    } else {
+      // 4. If credentials are not ok we are sending an error (401)
+      next(createHttpError(401, "Credentials are not ok!"))
+    }
+  } catch (error) {
+    next(error)
+  }
+}
+
 const users = {
   create: create,
   getAll: getAll,
   getSingle: getSingle,
   update: update,
   deleteSingle: deleteSingle,
-  getAllPosts: getAllPosts
+  getAllPosts: getAllPosts,
+  checkLogin: checkLogin
 }
 
 export default users
