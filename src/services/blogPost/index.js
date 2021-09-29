@@ -2,6 +2,7 @@ import express from "express"
 import blogPost from "./blogPost-handlers.js"
 import blogComments from "./comments-handlers.js"
 import responseValidations from "../../lib/response-validations.js"
+import { JWTAuthMiddleware } from "../../auth/jwt-middle.js"
 
 
 
@@ -14,24 +15,24 @@ router
 
 router
   .route("/")
-  .post(blogPost.create)
+  .post(JWTAuthMiddleware, blogPost.create)
 
 router
   .route("/:blogPostID")
   .get(blogPost.getSingle)
-  .put(blogPost.update)
-  .delete(blogPost.deleteSingle)
+  .put(JWTAuthMiddleware, blogPost.update)
+  .delete(JWTAuthMiddleware, blogPost.deleteSingle)
 
 router
   .route("/:blogPostID/comments")
-  .post(blogComments.create)
+  .post(JWTAuthMiddleware, blogComments.create)
   .get(blogComments.getCommentsFromBlog)
 
 router
   .route("/:blogPostID/comments/:commentID")
   .get(blogComments.getSingleComment)
-  .put(blogComments.update)
-  .delete(blogComments.deleteSingle)
+  .put(JWTAuthMiddleware, blogComments.update)
+  .delete(JWTAuthMiddleware, blogComments.deleteSingle)
 
 router
   .route("/:blogPostID/like/:userID")

@@ -2,6 +2,7 @@ import User from "../../db/models/User.js"
 import aqp from 'api-query-params';
 import BlogPost from "../../db/models/BlogPost.js"
 import { JWTAuthenticate } from "../../auth/jwt-aux.js";
+import createHttpError from "http-errors"
 
 
 const getAll = async (req, res, next) => {
@@ -106,9 +107,7 @@ const getAllPosts = async (req, res, next) => {
 const checkLogin = async (req, res, next) => {
   try {
     const { email, password } = req.body
-
-
-
+    console.log(email, password, 'From check login')
     const user = await User.checkCredentials(email, password)
 
     if (user) {

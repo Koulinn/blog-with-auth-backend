@@ -1,7 +1,6 @@
 import express from "express"
 import users from './user-handlers.js'
 import { basicAuthMiddleware } from "../../auth/auth.js"
-import { JWTAuthenticate } from "../../auth/jwt-aux.js"
 import { JWTAuthMiddleware } from "../../auth/jwt-middle.js"
 
 const router = express.Router()
@@ -24,13 +23,13 @@ router
 
 router
   .route("/me/stories")
-  .get(basicAuthMiddleware, users.getAllPosts)
+  .get(JWTAuthMiddleware, users.getAllPosts)
   
 router
   .route("/:userID")
-  .get(basicAuthMiddleware, users.getSingle)
-  .put(basicAuthMiddleware, users.update)
-  .delete(basicAuthMiddleware, users.deleteSingle)
+  .get(JWTAuthMiddleware, users.getSingle)
+  .put(JWTAuthMiddleware, users.update)
+  .delete(JWTAuthMiddleware, users.deleteSingle)
 
 // router
 //   .route("/:userID/comments")
