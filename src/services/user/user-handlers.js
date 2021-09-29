@@ -31,10 +31,11 @@ const getAll = async (req, res, next) => {
 }
 const getSingle = async (req, res, next) => {
   try {
-    const {userID} = req.params
-    const user = await User.findById(userID)
+    console.log(req.user, 'from get single')
+    // const {userID} = req.params
+    // const user = await User.findById(userID)
    
-    res.send(user)
+    res.send(req.user)
   } catch (error) {
     res.status(500)
     console.log(error)
