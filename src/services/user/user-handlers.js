@@ -1,5 +1,6 @@
 import User from "../../db/models/User.js"
 import aqp from 'api-query-params';
+import BlogPost from "../../db/models/BlogPost.js"
 
 
 const getAll = async (req, res, next) => {
@@ -55,8 +56,12 @@ const create = async (req, res, next) => {
 const update = async (req, res, next) => {
   try {
     const {userID} = req.params
+    console.log(req.user)
 
-    console.log(userID)
+    // const updatedUser = await User.updateOne(userID, req.body, {
+    //   new: true
+    // })
+    // console.log(updatedUser)
     const updatedUser = await User.findByIdAndUpdate(userID, req.body, {
       new: true
     })
@@ -86,12 +91,24 @@ const deleteSingle = async (req, res, next) => {
   }
 }
 
+const getAllPosts = async (req, res, next) => {
+  try {
+    const posts = await BlogPost.find({ author: req.user._id.toString() })
+
+    res.status(200).send(posts)
+
+  } catch (error) {
+    next(error)
+  }
+}
+
 const users = {
   create: create,
   getAll: getAll,
   getSingle: getSingle,
   update: update,
-  deleteSingle: deleteSingle
+  deleteSingle: deleteSingle,
+  getAllPosts: getAllPosts
 }
 
 export default users

@@ -1,5 +1,6 @@
 import express from "express"
 import users from './user-handlers.js'
+import { basicAuthMiddleware } from "../../auth/auth.js"
 
 const router = express.Router()
 
@@ -10,10 +11,14 @@ router
 
 
 router
+  .route("/me/stories")
+  .get(basicAuthMiddleware, users.getAllPosts)
+  
+router
   .route("/:userID")
-  .get(users.getSingle)
-  .put(users.update)
-  .delete(users.deleteSingle)
+  .get(basicAuthMiddleware, users.getSingle)
+  .put(basicAuthMiddleware, users.update)
+  .delete(basicAuthMiddleware, users.deleteSingle)
 
 // router
 //   .route("/:userID/comments")

@@ -26,15 +26,15 @@ router
   .route("/:blogPostID/comments")
   .post(blogComments.create)
   .get(blogComments.getCommentsFromBlog)
-  
+
 router
-    .route("/:blogPostID/comments/:commentID")
-    .get(blogComments.getSingleComment)
-    .put(blogComments.update)
-    .delete(blogComments.deleteSingle)
-    
-    router
-        .route("/:blogPostID/like/:userID")
-        .get(blogPost.likes)
-  
+  .route("/:blogPostID/comments/:commentID")
+  .get(blogComments.getSingleComment)
+  .put(blogComments.update)
+  .delete(blogComments.deleteSingle)
+
+router
+  .route("/:blogPostID/like/:userID")
+  .get(blogPost.likes)
+
 export default router

@@ -32,6 +32,7 @@ export const forbiddenRequest = (err, req, res, next) => {
 }
 
 const serverErrorHandler = (err, req, res, next) => {
+    console.log(err)
    
     res.status(500).send("I'm having some existential crisis at the moment, ask me later!")
 }
