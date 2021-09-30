@@ -49,8 +49,6 @@ export const verifyJWT = (token) =>
   export const refreshTokens = async actualRefreshToken => {
   
     const decodedRefreshToken = await verifyRefreshJWT(actualRefreshToken)
-  
-  
     const user = await User.findById(decodedRefreshToken._id)
   
     if (!user) throw new Error("User not found!")

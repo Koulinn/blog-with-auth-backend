@@ -12,9 +12,6 @@ export const basicAuthMiddleware = async (req, res, next) => {
 
         const [email, password] = decodedCredentials.split(":")
 
-        console.log("EMAIL ", email)
-        console.log("PASSWORD ", password)
-
         const user = await UserModel.checkCredentials(email, password)
         console.log(user)
 
