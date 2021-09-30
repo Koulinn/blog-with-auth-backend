@@ -127,7 +127,9 @@ const checkLogin = async (req, res, next) => {
 
 const refreshToken = async (req, res, next) => {
   try {
-    const { actualRefreshToken } = req.body
+
+    // console.log(req.body)
+    const { actualRefreshToken } = req.body.body
     const { accessToken, refreshToken } = await refreshTokens(actualRefreshToken)
 
     res.send({ accessToken, refreshToken })

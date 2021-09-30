@@ -20,7 +20,16 @@ const badRequestErrorHandler = (err, req, res, next) => {
     }
 }
 
-export const forbiddenRequest = (err, req, res, next) => {
+ const unauthorizedHandler = (err, req, res, next) => {
+    if (err.status === 401) {
+        console.log(err)
+      res.status(401).send({ status: "error", message: err.message || "You are not logged in!" })
+    } else {
+      next(err)
+    }
+  }
+
+ const forbiddenRequest = (err, req, res, next) => {
     if (err.status === 403) {
         res.status(400).send({
             success: false,
@@ -41,7 +50,8 @@ const errorHandlers = {
     notFound: notFoundErrorHandler,
     badRequest: badRequestErrorHandler,
     forbidden: forbiddenRequest,
-    server: serverErrorHandler
+    server: serverErrorHandler,
+    unauthorizedHandler: unauthorizedHandler
 }
 
 export default errorHandlers

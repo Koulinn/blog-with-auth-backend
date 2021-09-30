@@ -8,11 +8,13 @@ export const JWTAuthMiddleware = async (req, res, next) => {
     next(createHttpError(401, "Please provide credentials in Authorization header!"))
   } else {
     try {
-
+      console.log('asdasdasdasdasdasd')
+      
       const token = req.headers.authorization.replace("Bearer ", "")
+      console.log(token)
 
       const decodedToken = await verifyJWT(token)
-      console.log(decodedToken)
+      console.log(decodedToken, 'decoded token')
 
       const user = await User.findById(decodedToken._id)
 
@@ -23,6 +25,7 @@ export const JWTAuthMiddleware = async (req, res, next) => {
         next(createHttpError(404, "User not found!"))
       }
     } catch (error) {
+      // console.log(req.headers)
       next(createHttpError(401, "Token not valid!"))
     }
   }

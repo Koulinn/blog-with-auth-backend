@@ -23,6 +23,7 @@ server.use("/user", usersRouter)
 server.use(errorHandlers.forbidden)
 server.use(errorHandlers.notFound)
 server.use(errorHandlers.badRequest)
+server.use(errorHandlers.unauthorizedHandler)
 server.use(errorHandlers.server)
 
 
