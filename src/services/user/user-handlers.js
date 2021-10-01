@@ -58,8 +58,9 @@ const create = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   try {
-    const {userID} = req.params
-    console.log(req.user)
+    // const {userID} = req.params
+    const userID = req.user._id
+    console.log(req.user._id)
 
     // const updatedUser = await User.updateOne(userID, req.body, {
     //   new: true
@@ -127,7 +128,7 @@ const checkLogin = async (req, res, next) => {
 
 const refreshToken = async (req, res, next) => {
   try {
-
+    
     // console.log(req.body)
     const { actualRefreshToken } = req.body.body
     const { accessToken, refreshToken } = await refreshTokens(actualRefreshToken)

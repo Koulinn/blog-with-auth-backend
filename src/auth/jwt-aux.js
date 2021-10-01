@@ -55,7 +55,8 @@ export const verifyJWT = (token) =>
   
     if (user.refreshToken === actualRefreshToken) {
       const { accessToken, refreshToken } = await JWTAuthenticate(user)
-  
+    //  user.refresh.= refreshToken
+    //  user.save()
       return { accessToken, refreshToken }
     } else {
       throw createHttpError(401, "Refresh Token not valid!")

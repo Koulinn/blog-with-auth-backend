@@ -2,6 +2,7 @@ import express from "express"
 import users from './user-handlers.js'
 import { basicAuthMiddleware } from "../../auth/auth.js"
 import { JWTAuthMiddleware } from "../../auth/jwt-middle.js"
+import passport from "passport"
 
 const router = express.Router()
 
@@ -12,6 +13,22 @@ router
 router
   .route("/login/check")
   .post(users.checkLogin)
+
+router
+  .route("/googleRedirect")
+  .get(passport.authenticate("google"), async (req, res, next) => {
+    try {
+      console.log("redirect")
+      console.log(req.user)
+      res.redirect(`http://localhost:3000?accessToken=${req.user.tokens.accessToken}&refreshToken=${req.user.tokens.refreshToken}`)
+    } catch (error) {
+      next(error)
+    }
+  })
+
+router
+  .route("/googleLogin")
+  .get(passport.authenticate('google',{ scope: ["profile", 'email']}))
   
   router
     .route("/refresh/token")

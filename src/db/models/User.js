@@ -8,10 +8,11 @@ const userSchema = new Schema(
         name: { type: String, required: true },
         surname: { type: String, required: true },
         email: { type: String, unique: true, required: true },
-        password: { type: String, required: true },
+        password: { type: String },
         role: { type: String, enum:['Admin', 'User'] , default: 'User' },
         refreshToken: { type: String },
-        dateOfBirth: { type: Date, required: true },
+        dateOfBirth: { type: Date },
+        googleId: { type: String },
         avatar: {
           type: String,
           default: "https://ui-avatars.com/api/?name=Unnamed+User",

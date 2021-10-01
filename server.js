@@ -4,6 +4,8 @@ import blogPostRouter from "./src/services/blogPost/index.js"
 import usersRouter from "./src/services/user/index.js"
 import lib from "./src/lib/index.js"
 import mongoose from 'mongoose'
+import passport from "passport"
+import { googleStrategy } from "./src/auth/Oauth/strategy-config.js"
 
 
 const {errorHandlers, serverConfig} = lib
@@ -12,8 +14,11 @@ const {errorHandlers, serverConfig} = lib
 const server = express()
 const { PORT } = process.env
 
+passport.use('google', googleStrategy)
+
 server.use(express.json())
 server.use(cors(serverConfig))
+server.use(passport.initialize())
 
 server.use("/blogPost", blogPostRouter)
 server.use("/user", usersRouter)
